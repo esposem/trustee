@@ -19,12 +19,18 @@ use log::warn;
 #[derive(Default, Clone)]
 pub struct Admin {
     public_key: Option<Ed25519PublicKey>,
+    disable_admin_api: bool,
 }
 
 impl TryFrom<AdminConfig> for Admin {
     type Error = Error;
 
     fn try_from(value: AdminConfig) -> Result<Self> {
+        if value.disable_admin_api {
+            warn!("admin API is disabled");
+            return Ok(Admin::default());
+        }
+
         if value.insecure_api {
             warn!("insecure admin APIs are enabled");
             return Ok(Admin::default());
@@ -35,12 +41,17 @@ impl TryFrom<AdminConfig> for Admin {
         let key = Ed25519PublicKey::from_pem(&user_public_key_pem)?;
         Ok(Self {
             public_key: Some(key),
+            disable_admin_api: false,
         })
     }
 }
 
 impl Admin {
     pub(crate) fn validate_auth(&self, request: &HttpRequest) -> Result<()> {
+        if self.disable_admin_api {
+            return Err(Error::AdminApiDisabled);
+        }
+
         let Some(public_key) = &self.public_key else {
             return Ok(());
         };

@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::admin::config::{AdminConfig, DEFAULT_INSECURE_API};
+use crate::admin::config::{AdminConfig, DEFAULT_INSECURE_API, DEFAULT_DISABLE_ADMIN_API};
 use crate::plugins::PluginsConfig;
 use crate::policy_engine::PolicyEngineConfig;
 use crate::token::AttestationTokenVerifierConfig;
@@ -83,6 +83,7 @@ impl TryFrom<&Path> for KbsConfig {
     fn try_from(config_path: &Path) -> Result<Self, Self::Error> {
         let c = Config::builder()
             .set_default("admin.insecure_api", DEFAULT_INSECURE_API)?
+            .set_default("admin.disable_admin_api", DEFAULT_DISABLE_ADMIN_API)?
             .set_default("http_server.insecure_http", DEFAULT_INSECURE_HTTP)?
             .set_default("http_server.sockets", vec![DEFAULT_SOCKET])?
             .set_default(

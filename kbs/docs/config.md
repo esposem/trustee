@@ -207,6 +207,7 @@ The following properties can be set under the `[admin]` section.
 |--------------------------|--------------|------------------------------------------------------------------------------------------------------------|----------|----------------------|
 | `auth_public_key`        | String       | Path to the public key used to authenticate the admin APIs                                                 | No       | None                 |
 | `insecure_api`           | Boolean      | Whether KBS will not verify the public key when called admin APIs                                          | No       | `false`              |
+| `disable_admin_api`      | Boolean      | Whether the admin APIs should be disabled or not. Useful for operator-based deployments                    | No       | `false`              |
 
 ### Policy Engine Configuration
 

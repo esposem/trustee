@@ -19,6 +19,9 @@ pub enum Error {
     #[error("`auth_public_key` is not set in the config file")]
     NoPublicKeyGiven,
 
+    #[error("Admin API is disabled")]
+    AdminApiDisabled,
+
     #[error("Failed to parse admin public key")]
     ParsePublicKey(#[from] jwt_simple::Error),
 

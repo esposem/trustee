@@ -7,6 +7,7 @@ use std::path::PathBuf;
 use serde::Deserialize;
 
 pub const DEFAULT_INSECURE_API: bool = false;
+pub const DEFAULT_DISABLE_ADMIN_API: bool = false;
 
 #[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct AdminConfig {
@@ -18,6 +19,10 @@ pub struct AdminConfig {
     /// WARNING: Using this option enables KBS insecure APIs such as Resource Registration without
     /// verifying the JWK.
     pub insecure_api: bool,
+
+    /// Whether the admin APIs should be disabled or not.
+    /// Useful for operator-based deployments.
+    pub disable_admin_api: bool,
 }
 
 impl Default for AdminConfig {
@@ -25,6 +30,7 @@ impl Default for AdminConfig {
         Self {
             auth_public_key: None,
             insecure_api: DEFAULT_INSECURE_API,
+            disable_admin_api: DEFAULT_DISABLE_ADMIN_API,
         }
     }
 }
